@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telco Providers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #8b5cf6;
+    }
+    #root {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script>
+    const headers = [
+      { title: 'Telco', color: 'bg-blue-600' },
+      { title: 'Antenna/Ancillary', color: 'bg-blue-600' },
+      { title: 'CATV', color: 'bg-blue-600' },
+      { title: 'Locations', color: 'bg-green-500' },
+      { title: 'Fiber Optics', color: 'bg-yellow-500' }
+    ];
+
+    const rows = [
+      {
+        telco: 'AT&T',
+        antenna: 'ATT Mobility (not the same as ATT)',
+        catv: 'Cox Communications San Diego & OC',
+        location: 'City of Encinitas',
+        fiber: 'Time Warner ASX (not the same as Spectrum)'
+      },
+      {
+        telco: 'Frontier',
+        antenna: 'Clearlinx Networks (A K A Extenet)',
+        catv: 'Mediacom California LLC',
+        location: 'City of San Diego',
+        fiber: 'TPX (TelePacific)'
+      },
+      {
+        telco: 'Camp Pendleton',
+        antenna: 'Crown Castle',
+        catv: 'Orion',
+        location: 'Cityside Fiber',
+        fiber: 'Ubiquity (Netlv)'
+      },
+      {
+        telco: '',
+        antenna: 'Mobilitie LLC',
+        catv: 'Time Warner / Spectrum',
+        location: 'Crown Castle (Freedom, NextG, NewPath, Sunesys)',
+        fiber: 'Verizon Business (MCI)'
+      },
+      {
+        telco: '',
+        antenna: 'Ricochet Networks (abandoned equipment)',
+        catv: 'Venture Communications (abandoned equipment)',
+        location: 'Intrepid',
+        fiber: 'XO Communications (Now Verizon Business)'
+      },
+      {
+        telco: '',
+        antenna: 'Sprint',
+        catv: 'Wyyred / Media 3 Communications',
+        location: 'LA Cellular',
+        fiber: 'Zito West (USA Cable/Julian Cable)'
+      },
+      {
+        telco: '',
+        antenna: 'T-Mobile',
+        catv: 'Zito West (USA Cable/Julian Cable)',
+        location: 'Level 3 (Time Warner ASX)',
+        fiber: ''
+      },
+      {
+        telco: '',
+        antenna: 'Verizon Wireless',
+        catv: '',
+        location: 'SDG&E Fiber / Sempra Telecom',
+        fiber: ''
+      },
+      {
+        telco: '',
+        antenna: 'Zayo Group',
+        catv: '',
+        location: 'Teleport Communications Group',
+        fiber: ''
+      }
+    ];
+
+    function createContent() {
+      const content = document.createElement('div');
+      content.className = 'w-[1920px] h-[1080px] bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col overflow-hidden pt-32';
+      content.style.cssText = `
+        width: 1920px;
+        height: 1080px;
+        background: #f97316;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        padding-top: 8rem;
+      `;
+
+      // Table Container
+      const tableContainer = document.createElement('div');
+      tableContainer.style.cssText = `
+        flex: 1;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        overflow: hidden;
+      `;
+
+      const tableWrapper = document.createElement('div');
+      tableWrapper.style.cssText = `
+        background: transparent;
+        border-radius: 1rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow: none;
+      `;
+
+      // Table Header
+      const headerRow = document.createElement('div');
+      headerRow.style.cssText = `
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        border-bottom: none;
+      `;
+
+      headers.forEach((header, index) => {
+        const headerCell = document.createElement('div');
+        const bgColor = header.color === 'bg-blue-600' ? '#2563eb' : 
+                       header.color === 'bg-green-500' ? '#22c55e' : '#eab308';
+        headerCell.style.cssText = `
+          background-color: transparent;
+          padding: 0.75rem 1.5rem;
+        `;
+        
+        const headerText = document.createElement('h2');
+        headerText.style.cssText = `
+          font-size: 2.25rem;
+          font-weight: bold;
+          color: white;
+          text-align: center;
+        `;
+        headerText.textContent = header.title;
+        headerCell.appendChild(headerText);
+        headerRow.appendChild(headerCell);
+      });
+
+      tableWrapper.appendChild(headerRow);
+
+      // Table Body
+      const tableBody = document.createElement('div');
+      tableBody.style.cssText = `
+        flex: 1;
+        overflow: hidden;
+      `;
+
+      rows.forEach((row, rowIndex) => {
+        const rowDiv = document.createElement('div');
+        rowDiv.style.cssText = `
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          border-bottom: none;
+        `;
+
+        const cells = [row.telco, row.antenna, row.catv, row.location, row.fiber];
+        cells.forEach((cellText, cellIndex) => {
+          const cell = document.createElement('div');
+          cell.style.cssText = `
+            padding: 0.5rem 1.5rem;
+          `;
+          
+          const span = document.createElement('span');
+          span.style.cssText = `
+            font-size: 1.5rem;
+            color: #374151;
+          `;
+          span.textContent = cellText;
+          cell.appendChild(span);
+          rowDiv.appendChild(cell);
+        });
+
+        tableBody.appendChild(rowDiv);
+      });
+
+      tableWrapper.appendChild(tableBody);
+      tableContainer.appendChild(tableWrapper);
+      content.appendChild(tableContainer);
+
+      return content;
+    }
+
+    function scaleStage() {
+      const container = document.getElementById('root');
+      const stage = document.getElementById('stage');
+      
+      if (!container || !stage) return;
+      
+      const containerW = container.offsetWidth;
+      const containerH = container.offsetHeight;
+      
+      const stageW = 1920;
+      const stageH = 1080;
+      
+      // Calculate scale to fit (contain)
+      const scale = Math.min(containerW / stageW, containerH / stageH);
+      
+      stage.style.transform = `scale(${scale})`;
+      stage.style.transformOrigin = 'center center';
+    }
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', function() {
+      const root = document.getElementById('root');
+      root.style.cssText = `
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background-color: #10b981;
+      `;
+
+      const stage = document.createElement('div');
+      stage.id = 'stage';
+      stage.appendChild(createContent());
+      root.appendChild(stage);
+
+      // Scale on mount and window resize
+      scaleStage();
+      window.addEventListener('resize', scaleStage);
+      
+      // Also check after a short delay in case fonts/content load
+      setTimeout(scaleStage, 100);
+    });
+  </script>
+</body>
+</html>
